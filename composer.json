@@ -1,0 +1,32 @@
+{
+    "name": "rongqiangqin/mailerqueue",
+    "type": "yii2-extension",
+    "description": "Redis Cache, Session and ActiveRecord for the Yii framework",
+    "keywords": ["yii2", "redis", "active-record", "cache", "session"],
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/xiaopenggithub/rongqiangqin_mailerqueue/issues",
+        "forum": "http://www.xiaopeng.info/",
+        "wiki": "http://www.xiaopeng.info",
+        "irc": "irc://irc.freenode.net/yii",
+        "source": "https://github.com/xiaopenggithub/rongqiangqin_mailerqueue"
+    },
+    "authors": [
+        {
+            "name": "Qinrongqiang",
+            "email": "361018729@qq.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.14"
+    },
+    "autoload": {
+        "psr-4": { "rongqiangqin\\mailerqueue\\": "src" }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+}
