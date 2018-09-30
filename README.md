@@ -1,0 +1,2 @@
+# rongqiangqin_mailerqueue
+yii2通过redis发邮件
