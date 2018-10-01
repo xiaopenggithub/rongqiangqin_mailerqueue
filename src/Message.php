@@ -11,18 +11,32 @@ class Message extends \yii\swiftmailer\Message{
         }
 
         $mailer=Yii::$app->mailer;
-        if(empty($mailer) || $redis->select($mailer->db)){
+
+        if(empty($mailer) || !$redis->select($mailer->db)){
             throw  new \yii\base\InvalidConfigException('db not defined.');
         }
+
+
+        //print_r($this->getBcc());
+        //exit;
         $message=[];
-        $message['from']=array_keys($this->from);
-        $message['to']=array_keys($this->getTo());
-        $message['cc']=array_keys($this->getCc());
-        $message['bcc']=array_keys($this->getBcc());
-        $message['reply_to']=array_keys($this->getReplyTo());
-        $message['charset']=array_keys($this->getCharset());
-        $message['subject']=array_keys($this->getSubject());
-        $message['subject']=array_keys($this->getSubject());
+        $message['from'] = array_keys($this->from);
+        $message['to'] = array_keys($this->getTo());
+        if($this->getBcc()){
+            $message['cc'] = array_keys($this->getCc());
+        }
+        if($this->getBcc()){
+            $message['bcc'] = array_keys($this->getBcc());
+        }
+        if($this->getReplyTo()){
+            $message['reply_to'] = array_keys($this->getReplyTo());
+        }
+        if($this->getCharset()){
+            $message['charset'] = array_keys($this->getCharset());
+        }
+        if($this->getSubject()){
+            $message['subject'] = $this->getSubject();
+        }
 
         $parts=$this->getSwiftMessage()->getChildren();
 
@@ -39,7 +53,7 @@ class Message extends \yii\swiftmailer\Message{
                         $message['text_body']=$part->getBody();
                         break;
                 }
-                if(!$message['charset']){
+                if(!isset($message['charset'])){
                     $message['charset']=$part->getCharset();
                 }
             }
