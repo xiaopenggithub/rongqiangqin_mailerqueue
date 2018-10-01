@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: qinrongqiang
- * Date: 2018/10/1
- * Time: 上午6:05
- */
 namespace  rongqiangqin\mailerqueue;
 use Yii;
 class MailerQueue extends \yii\swiftmailer\Mailer{
     public $messageClass="rongqiangqin\mailerqueue\Message";
     public $key="mails";
-    public $db='1';
+    public $db=1;
 
     public function process()
     {
@@ -18,12 +12,13 @@ class MailerQueue extends \yii\swiftmailer\Mailer{
         if(empty($redis)){
             throw  new \yii\base\InvalidConfigException('redis not found in config.');
         }
-        if($this->redis->selct($this->db && $messages=$redis->lrange($this->key,0,-1))){
+
+        if($redis->select($this->db) && $messages=$redis->lrange($this->key,0,-1)){
             $messagesObj=new Message();
             foreach($messages as $message){
                 $message=json_decode($message,true);
-                if(empty($message) || $this->setMessage($messagesObj,$message)){
-                    throw  new \ServerErrorHttpException('message error.');
+                if(empty($message) || !$this->setMessage($messagesObj,$message)){
+                    throw new \ServerErrorHttpException('message error');
                 }
                 if($messagesObj->send()){
                     //执行成功后删除
