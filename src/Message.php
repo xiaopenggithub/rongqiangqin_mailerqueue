@@ -1,7 +1,7 @@
 <?php
 namespace  rongqiangqin\mailerqueue;
 use Yii;
-class Message extends \yii\swiftmailer\Mailer{
+class Message extends \yii\swiftmailer\Message{
 
     public function queue()
     {
